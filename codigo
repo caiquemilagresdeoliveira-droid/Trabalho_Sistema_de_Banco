@@ -1,0 +1,148 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    // Aqui estão as variáveis do código
+    int numeroconta;
+    string nomecliente;
+    string cpf;
+    int tipoconta;
+    double saldo;
+    bool contaativa = false;
+    int opcao;
+    char continuar;
+    
+    // Aqui está o menu principal
+    do {
+    cout << "       Banco INF101\n __________________________\n 1 - Cadastrar conta\n 2 - Consultar conta\n 3 - Verificar saldo\n 4 - Alterar tipo da conta\n 5 - Ativar/Desativar conta\n 6 - Sair";
+    cin >> opcao;
+    
+    // Aqui, o switch que será usado para selecionar as opções
+    switch(opcao) {
+        
+        // Primeiro case: o cadastro da conta com os dados necessários
+        case 1:
+        cout << "\n    Cadastro de conta    \n";
+    do {
+        cout << "Digite o número da conta (maior que zero): ";
+        cin >> numeroconta;
+        if (numeroconta <= 0) {
+            cout << "Erro: O número da conta deve ser positivo,\n";
+        }
+    } while (numeroconta <= 0);
+    
+    cout << "Nome do titular: ";
+    cin.ignore();
+    getline(cin, nomecliente);
+    
+    cout << "CPF: ";
+    cin >> cpf;
+    
+    do {
+        cout << "Tipo de conta (1 = corrente / 2 = poupança): ";
+        cin >> tipoconta;
+        if (tipoconta != 1 && tipoconta != 2) {
+            cout << "Opção inválida. Tente novamente." << endl;
+             }
+    } while (tipoconta != 1 && tipoconta != 2);
+    
+    do {
+        cout << "Digite o saldo inicial: R$";
+        cin >> saldo;
+        if (saldo < 0) {
+            cout << "Inválido. O saldo deve ser maior ou igual a 0." << endl;
+        }
+        } while (saldo < 0);
+        
+        contaativa = true;
+        cout << "Conta cadastrada com sucesso!" << endl;
+        break;
+        
+        // No case 2, as informações da conta serão exibidas
+        case 2:
+        cout << "\n    Consulta de conta    \n";
+        if (contaativa) {
+            cout << "Número da conta: " << numeroconta << endl;
+            cout << "Nome do cliente: " << nomecliente << endl;
+            cout << "CPF: " << cpf << endl;
+            cout << "Tipo de conta: ";
+            if (tipoconta == 1) {
+                cout << "Corrente" << endl;
+            } else {
+                cout << "Poupança" << endl;
+            }
+            cout << "Saldo atual: " << saldo << endl;
+            cout << "Status: Ativa" << endl;
+            
+            } else {
+                cout << "Erro. A conta está inativa ou não foi cadastrada." << endl;
+            } break;
+           
+           // No case 3, será exibido o saldo
+           case 3:
+           cout << "\n    Verificação de saldo    \n";
+           if (contaativa) {
+               cout << "Saldo atual: R$" << saldo << endl;
+           } else {
+               cout << "Erro. A conta está inativa ou não foi cadastrada." << endl;
+           } break;
+           
+           // Aqui, poderá ser alterado o tipo de conta
+           case 4:
+           cout << "\n    Alteração de tipo de conta \n";
+           if (contaativa) {
+               cout << "Tipo atual: " << (tipoconta == 1 ? "Corrente" : "Poupanca") << endl;
+           
+           do {
+               cout << "Digite o novo tipo de conta: ";
+               cin >> tipoconta;
+               
+               if (tipoconta != 1 && tipoconta != 2) {
+                   cout << "Opção inválida. Tente novamente." << endl;
+               }
+           }  while (tipoconta != 1 && tipoconta != 2);
+           cout << "Tipo de conta alterada." << endl;
+           
+           } else {
+               cout << "Erro. A conta está inativa ou não foi cadastrada." << endl;
+           }
+           break;
+           
+           // Aqui, a conta ativa será desativada.
+           case 5:
+           cout << "\n     Ativar/Desativar conta    \n";
+           if (contaativa > 0) {
+               contaativa = !contaativa;
+               if (contaativa) {
+                   cout << "A conta foi ativada." << endl;
+        } else {
+            cout << "A conta foi desativada." << endl;
+               }
+           } else {
+               cout << "Erro. A conta está inativa ou não foi cadastrada." << endl;
+           } break;
+           
+           // Aqui, é encerrado o programa
+           case 6:
+           cout << "Programa encerrado." << endl;
+           break;
+           
+           default:
+                cout << "Opção inválida. Tente novamente." << endl;
+                break;
+        } 
+        
+        // Aqui, é para que o programa pergunte se o usuário quer fazer uma nova operação
+        if (opcao >= 1 && opcao <=5) {
+            cout << "\n     Deseja fazer outra operação? (S/N) \n";
+            cin >> continuar;
+            if (continuar == 'n' || continuar == 'N') {
+                opcao = 6;
+                cout << "Programa encerrado." << endl;
+        
+            }
+            }
+     }while (opcao != 6); 
+    return 0;
+}
